@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="el">
 <head>
@@ -5,53 +6,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SocialForge AI</title>
 
-  <!--
-    ========================================================
-    FONTS
-    Syne: geometric display font για headers — δίνει
-    το "tech tool" feeling χωρίς να είναι cliché.
-    DM Sans: modern humanist sans για body text —
-    εξαιρετικά readable, λιγότερο generic από Inter.
-    ========================================================
-  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
-    /*
-    ========================================================
-    CSS VARIABLES — Design System
-    Όλα τα χρώματα σε ένα σημείο. Έτσι αν θέλεις να
-    αλλάξεις το brand color, αλλάζεις μόνο εδώ.
-    ========================================================
-    */
     :root {
-      --bg:          #08080e;
-      --surface:     #111118;
-      --border:      #1e1e2e;
-      --text:        #f0f0f5;
-      --muted:       #6b6b80;
-      --accent:      #4f8ef7;
-
-      /* Platform colors — χρησιμοποιούνται στα cards */
+      --bg:       #08080e;
+      --surface:  #111118;
+      --border:   #1e1e2e;
+      --text:     #f0f0f5;
+      --muted:    #6b6b80;
+      --accent:   #4f8ef7;
       --fb:   #1877F2;
       --ig:   #E1306C;
       --li:   #0A66C2;
       --tt:   #ffffff;
       --vis:  #7c3aed;
-
       --radius: 12px;
       --font-head: 'Syne', sans-serif;
       --font-body: 'DM Sans', sans-serif;
     }
 
-    /*
-    ========================================================
-    RESET & BASE
-    box-sizing: border-box σε όλα — αποφεύγει
-    υπολογισμούς με padding/width.
-    ========================================================
-    */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -63,14 +38,6 @@
       min-height: 100vh;
     }
 
-    /*
-    ========================================================
-    GRAIN OVERLAY
-    Ένα subtle noise texture πάνω από το background.
-    Δίνει depth και αποφεύγει το "flat" AI look.
-    Χρησιμοποιεί SVG filter με feTurbulence.
-    ========================================================
-    */
     body::before {
       content: '';
       position: fixed; inset: 0;
@@ -79,460 +46,94 @@
       z-index: 0;
     }
 
-    /*
-    ========================================================
-    LAYOUT WRAPPER
-    max-width: 760px — αρκετά φαρδύ για content,
-    αρκετά στενό για readability. Centered με auto margins.
-    ========================================================
-    */
-    .wrapper {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 48px 24px 80px;
-      position: relative;
-      z-index: 1;
-    }
+    .wrapper { max-width: 760px; margin: 0 auto; padding: 48px 24px 80px; position: relative; z-index: 1; }
 
-    /*
-    ========================================================
-    HEADER
-    Το logo/tagline section. Το badge "AI-POWERED"
-    δίνει instant context για portfolio viewers.
-    ========================================================
-    */
-    header {
-      text-align: center;
-      margin-bottom: 48px;
-    }
-
-    .badge {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--accent);
-      border: 1px solid var(--accent);
-      padding: 4px 12px;
-      border-radius: 100px;
-      margin-bottom: 20px;
-    }
-
-    header h1 {
-      font-family: var(--font-head);
-      font-size: clamp(2rem, 6vw, 3.2rem); /* clamp = responsive χωρίς media queries */
-      font-weight: 800;
-      letter-spacing: -1px;
-      line-height: 1.1;
-      margin-bottom: 12px;
-    }
-
+    header { text-align: center; margin-bottom: 48px; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); padding: 4px 12px; border-radius: 100px; margin-bottom: 20px; }
+    header h1 { font-family: var(--font-head); font-size: clamp(2rem, 6vw, 3.2rem); font-weight: 800; letter-spacing: -1px; line-height: 1.1; margin-bottom: 12px; }
     header h1 span { color: var(--accent); }
+    header p { color: var(--muted); font-size: 15px; max-width: 420px; margin: 0 auto; }
 
-    header p {
-      color: var(--muted);
-      font-size: 15px;
-      max-width: 420px;
-      margin: 0 auto;
-    }
+    .demo-banner { background: #1a120a; border: 1px solid #3d2b0a; color: #f59e0b; font-size: 13px; padding: 10px 16px; border-radius: 8px; margin-bottom: 28px; text-align: center; display: none; }
 
-    /*
-    ========================================================
-    DEMO BANNER
-    Εμφανίζεται όταν το n8n δεν τρέχει.
-    Ενημερώνει τον portfolio viewer χωρίς να σπάει το UX.
-    ========================================================
-    */
-    .demo-banner {
-      background: #1a120a;
-      border: 1px solid #3d2b0a;
-      color: #f59e0b;
-      font-size: 13px;
-      padding: 10px 16px;
-      border-radius: 8px;
-      margin-bottom: 28px;
-      text-align: center;
-      display: none; /* εμφανίζεται μόνο σε demo mode μέσω JS */
-    }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; margin-bottom: 24px; }
+    .card-title { font-family: var(--font-head); font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 24px; }
 
-    /*
-    ========================================================
-    FORM CARD
-    Το κεντρικό input panel. Surface color (#111118)
-    διαφοροποιείται ελαφρά από το background.
-    Border με λεπτή γραμμή για definition.
-    ========================================================
-    */
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px;
-      margin-bottom: 24px;
-    }
-
-    .card-title {
-      font-family: var(--font-head);
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 24px;
-    }
-
-    /*
-    ========================================================
-    FORM ELEMENTS
-    Label πάνω, input κάτω — πιο accessible από placeholders.
-    Gap: 20px μεταξύ fields για breathing room.
-    ========================================================
-    */
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr; /* 2 columns στο desktop */
-      gap: 20px;
-    }
-
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     .field { display: flex; flex-direction: column; gap: 6px; }
-    .field.full { grid-column: 1 / -1; } /* full width field */
-
-    label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--muted);
-      letter-spacing: 0.5px;
-    }
-
-    /* required star */
+    .field.full { grid-column: 1 / -1; }
+    label { font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: 0.5px; }
     label .req { color: var(--accent); margin-left: 2px; }
-
-    input, select {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text);
-      font-family: var(--font-body);
-      font-size: 14px;
-      padding: 10px 14px;
-      transition: border-color 0.2s;
-      width: 100%;
-      outline: none;
-    }
-
-    /* Focus state — accessibility + aesthetic */
-    input:focus, select:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(79,142,247,0.12);
-    }
-
-    select option { background: #1a1a2e; }
-
-    /*
-    ========================================================
-    SUBMIT BUTTON
-    Full-width, solid accent color. Transform on hover
-    για tactile feel. Disabled state κατά το loading.
-    ========================================================
-    */
-    .btn-generate {
-      width: 100%;
-      margin-top: 28px;
-      padding: 14px;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-family: var(--font-head);
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      letter-spacing: 0.5px;
-      transition: transform 0.15s, opacity 0.15s;
-    }
-
+    input, select { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: var(--font-body); font-size: 14px; padding: 10px 14px; transition: border-color 0.2s; width: 100%; outline: none; }
+    input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,142,247,0.12); }
+    
+    .btn-generate { width: 100%; margin-top: 28px; padding: 14px; background: var(--accent); color: #fff; border: none; border-radius: 8px; font-family: var(--font-head); font-size: 15px; font-weight: 700; cursor: pointer; transition: transform 0.15s, opacity 0.15s; }
     .btn-generate:hover { transform: translateY(-1px); opacity: 0.92; }
     .btn-generate:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-    /*
-    ========================================================
-    LOADING STATE
-    3 animated dots — CSS keyframe animation.
-    Κάθε dot έχει animation-delay για "wave" effect.
-    ========================================================
-    */
-    #loading {
-      display: none;
-      text-align: center;
-      padding: 48px 0;
-    }
-
+    #loading { display: none; text-align: center; padding: 48px 0; }
     .dots { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
-
-    .dot {
-      width: 10px; height: 10px;
-      background: var(--accent);
-      border-radius: 50%;
-      animation: bounce 1.2s infinite ease-in-out;
-    }
+    .dot { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; animation: bounce 1.2s infinite ease-in-out; }
     .dot:nth-child(2) { animation-delay: 0.2s; }
     .dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce { 0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; } 40% { transform: scale(1); opacity: 1; } }
 
-    @keyframes bounce {
-      0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-      40% { transform: scale(1); opacity: 1; }
-    }
+    #results { display: none; animation: fadeUp 0.4s ease; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
 
-    .loading-text {
-      font-size: 13px;
-      color: var(--muted);
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse { 0%,100% { opacity:0.5; } 50% { opacity:1; } }
-
-    /*
-    ========================================================
-    RESULTS SECTION
-    Κρυφό αρχικά, εμφανίζεται μετά το API call.
-    Fade-in animation για smooth reveal.
-    ========================================================
-    */
-    #results {
-      display: none;
-      animation: fadeUp 0.4s ease;
-    }
-
-    @keyframes fadeUp {
-      from { opacity:0; transform:translateY(16px); }
-      to   { opacity:1; transform:translateY(0); }
-    }
-
-    /*
-    ========================================================
-    PLATFORM CARDS
-    Κάθε πλατφόρμα έχει το brand color της ως
-    left border (4px). Subtle top gradient για depth.
-    ========================================================
-    */
-    .platform-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      margin-bottom: 16px;
-      overflow: hidden;
-    }
-
-    .platform-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border);
-      cursor: pointer; /* collapsible */
-      user-select: none;
-    }
-
-    .platform-label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: var(--font-head);
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    /* Το χρωματιστό dot δίπλα στο όνομα πλατφόρμας */
-    .dot-fb { background: var(--fb); }
-    .dot-ig { background: var(--ig); }
-    .dot-li { background: var(--li); }
-    .dot-tt { background: var(--tt); }
-    .dot-vis { background: var(--vis); }
-
-    .platform-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
+    .platform-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 16px; overflow: hidden; }
+    .platform-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; }
+    .platform-label { display: flex; align-items: center; gap: 10px; font-family: var(--font-head); font-size: 14px; font-weight: 700; }
+    .platform-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .dot-fb { background: var(--fb); } .dot-ig { background: var(--ig); } .dot-li { background: var(--li); } .dot-tt { background: var(--tt); } .dot-vis { background: var(--vis); }
     .platform-body { padding: 20px; }
 
-    /*
-    ========================================================
-    VARIATION TABS
-    Για το Facebook A/B — tab navigation.
-    Active tab έχει accent underline.
-    ========================================================
-    */
     .tabs { display: flex; gap: 0; margin-bottom: 20px; border-bottom: 1px solid var(--border); }
-
-    .tab {
-      padding: 8px 16px;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--muted);
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-      transition: color 0.2s, border-color 0.2s;
-    }
-
+    .tab { padding: 8px 16px; font-size: 13px; font-weight: 500; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
     .tab.active { color: var(--text); border-bottom-color: var(--accent); }
-
     .tab-pane { display: none; }
     .tab-pane.active { display: block; }
 
-    /*
-    ========================================================
-    CONTENT BLOCKS
-    Κάθε section μέσα στο platform card (hook, body κλπ)
-    έχει label + content. Copy button εμφανίζεται on hover.
-    ========================================================
-    */
     .content-section { margin-bottom: 20px; }
-    .content-section:last-child { margin-bottom: 0; }
-
-    .content-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .content-text {
-      font-size: 14px;
-      line-height: 1.7;
-      color: var(--text);
-      white-space: pre-wrap; /* διατηρεί line breaks από το AI */
-      word-break: break-word;
-    }
-
-    /*
-    ========================================================
-    COPY BUTTON
-    Εμφανίζεται πάντα (όχι μόνο hover) για mobile-friendly.
-    Μικρό, discrete, αλλάζει σε "Copied!" για feedback.
-    ========================================================
-    */
-    .copy-btn {
-      margin-top: 8px;
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 11px;
-      padding: 4px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
+    .content-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .content-text { font-size: 14px; line-height: 1.7; color: var(--text); white-space: pre-wrap; word-break: break-word; }
+    .copy-btn { margin-top: 8px; background: transparent; border: 1px solid var(--border); color: var(--muted); font-size: 11px; padding: 4px 10px; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
     .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
     .copy-btn.copied { border-color: #22c55e; color: #22c55e; }
 
-    /*
-    ========================================================
-    IMAGE SECTION
-    Η εικόνα φορτώνει lazy (loading="lazy").
-    Skeleton placeholder ενώ φορτώνει.
-    ========================================================
-    */
-    .image-preview {
-      width: 100%;
-      aspect-ratio: 1;
-      border-radius: 8px;
-      object-fit: cover;
-      background: var(--border);
-    }
+    .image-preview { width: 100%; aspect-ratio: 1; border-radius: 8px; object-fit: cover; background: var(--border); }
+    .image-actions { display: flex; gap: 10px; margin-top: 12px; }
+    .btn-sm { padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-block; }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    .btn-solid { background: var(--vis); border: 1px solid transparent; color: #fff; }
 
-    .image-actions { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
-
-    .btn-sm {
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: opacity 0.2s;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    .btn-sm:hover { opacity: 0.8; }
-
-    .btn-outline {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text);
-    }
-
-    .btn-solid {
-      background: var(--vis);
-      border: 1px solid transparent;
-      color: #fff;
-    }
-
-    /*
-    ========================================================
-    RESPONSIVE
-    Στο mobile: 1 column grid, μικρότερο padding
-    ========================================================
-    */
-    @media (max-width: 600px) {
-      .form-grid { grid-template-columns: 1fr; }
-      .card { padding: 20px; }
-    }
+    @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } .card { padding: 20px; } }
   </style>
 </head>
 
 <body>
 <div class="wrapper">
-
-  <!-- ========================================================
-    HEADER SECTION
-    Το brand identity της εφαρμογής.
-    Το <span> βάζει accent color στη λέξη "AI".
-  ======================================================== -->
   <header>
     <div class="badge">AI-POWERED · n8n AUTOMATION</div>
     <h1>Social<span>Forge</span> AI</h1>
     <p>Δώσε ένα θέμα. Πάρε έτοιμο content για κάθε πλατφόρμα.</p>
   </header>
 
-  <!-- Demo banner — κρυφό αρχικά, εμφανίζεται από JS -->
   <div class="demo-banner" id="demoBanner">
-    ⚡ Demo Mode — Προβολή mock δεδομένων. Για live χρήση απαιτείται το n8n να τρέχει locally.
+    ⚡ Demo Mode — Προβολή mock δεδομένων.
   </div>
 
-  <!-- ========================================================
-    INPUT FORM CARD
-    5 fields:
-    1. Τίτλος/Θέμα (required) — το κυρίαρχο input
-    2. URL (optional) — για product pages
-    3. Tone of Voice (select) — 4 επιλογές
-    4. Visual Style (select) — 4 επιλογές  
-    5. Email (required) — για αποστολή αποτελεσμάτων
-
-    ΤΑ FIELD NAMES στο JS πρέπει να ταιριάζουν ΑΚΡΙΒΩΣ
-    με αυτά που περιμένει το n8n webhook.
-  ======================================================== -->
   <div class="card">
     <div class="card-title">— Input</div>
-
     <div class="form-grid">
-
       <div class="field full">
         <label for="topic">Θέμα / Προϊόν <span class="req">*</span></label>
-        <input type="text" id="topic" placeholder="π.χ. Optilis Ireks — βελτιωτικό αρτοποιίας Laoudis" />
+        <input type="text" id="topic" placeholder="π.χ. Optilis Ireks" />
       </div>
-
       <div class="field full">
         <label for="productUrl">URL Προϊόντος <span style="color:var(--muted)">(προαιρετικό)</span></label>
-        <input type="url" id="productUrl" placeholder="https://www.laoudis.gr/products/optilis-ireks" />
+        <input type="url" id="productUrl" />
       </div>
-
       <div class="field">
         <label for="tone">Tone of Voice <span class="req">*</span></label>
         <select id="tone">
@@ -543,7 +144,6 @@
           <option value="Educational">Educational</option>
         </select>
       </div>
-
       <div class="field">
         <label for="style">Visual Style <span class="req">*</span></label>
         <select id="style">
@@ -554,435 +154,166 @@
           <option value="Dark & Premium">Dark & Premium</option>
         </select>
       </div>
-
       <div class="field full">
         <label for="email">Αποστολή στο Email <span class="req">*</span></label>
         <input type="email" id="email" placeholder="yourname@email.com" />
       </div>
-
     </div>
-
-    <button class="btn-generate" id="generateBtn" onclick="generate()">
-      ⚡ Generate Content
-    </button>
+    <button class="btn-generate" id="generateBtn" onclick="generate()">⚡ Generate Content</button>
   </div>
 
-  <!-- ========================================================
-    LOADING STATE
-    Εμφανίζεται μόνο κατά την κλήση του webhook.
-    Τα 3 dots έχουν staggered animation για wave effect.
-    Το loading-text αλλάζει κάθε 2 δευτερόλεπτα μέσω JS.
-  ======================================================== -->
   <div id="loading">
-    <div class="dots">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-    </div>
+    <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
     <div class="loading-text" id="loadingText">Αναλύω το προϊόν...</div>
   </div>
 
-  <!-- ========================================================
-    RESULTS SECTION
-    Γεμίζει δυναμικά από JS μετά το API response.
-    Αρχικά hidden (display:none).
-  ======================================================== -->
   <div id="results"></div>
-
-</div><!-- /wrapper -->
+</div>
 
 <script>
-/*
-========================================================
-CONFIGURATION
-Το webhook URL. Αλλάζει μόνο αυτό αν μετακινηθεί
-το n8n σε server ή αλλάξει port.
-========================================================
-*/
+/* CONFIGURATION */
 const WEBHOOK_URL = 'http://localhost:5678/webhook/socialforge';
 
-/*
-========================================================
-LOADING MESSAGES
-Εναλλάσσονται κάθε 2 δευτερόλεπτα κατά το loading.
-Δίνουν αίσθηση ότι "κάτι συμβαίνει" στο background.
-========================================================
-*/
 const LOADING_MSGS = [
-  'Αναλύω το προϊόν...',
-  'Κάνω research στο internet...',
-  'Γράφω copy για Facebook...',
-  'Βελτιστοποιώ για Instagram...',
-  'Δημιουργώ TikTok hook...',
-  'Χτίζω το LinkedIn post...',
-  'Παράγω εικόνα...',
-  'Τελικές πινελιές...'
+  'Αναλύω το προϊόν...', 'Κάνω research...', 'Γράφω Facebook...', 'Βελτιστοποιώ Instagram...',
+  'Δημιουργώ TikTok hook...', 'Χτίζω LinkedIn post...', 'Παράγω εικόνα...', 'Τελικές πινελιές...'
 ];
 
-/*
-========================================================
-MOCK DATA — Demo Mode
-Όταν το n8n δεν τρέχει, χρησιμοποιείται αυτό.
-Είναι realistic data ώστε το demo να φαίνεται αληθινό.
-========================================================
-*/
 const MOCK = {
   facebook_a_title: 'Το μυστικό του τέλειου ψωμιού',
   facebook_a_hook: '🍞 Γιατί το ψωμί σου κολλάει στο ψυγείο; Και γιατί αυτοί που ξέρουν, δεν σου το λένε.',
-  facebook_a_body: '📌 Η αργή ζύμωση (12-72 ώρες) είναι η τεχνική που χρησιμοποιούν οι καλύτεροι αρτοποιοί.\n\n✔️ Πιο πλούσια γεύση\n✔️ Τραγανή κόρα που κρατάει\n✔️ Ομοιόμορφο αποτέλεσμα κάθε φορά\n\nΤο Optilis Ireks είναι ο καταλύτης που εξαλείφει τα λάθη και σου δίνει τον έλεγχο.',
+  facebook_a_body: '📌 Η αργή ζύμωση (12-72 ώρες) είναι η τεχνική που χρησιμοποιούν οι καλύτεροι αρτοποιοί.\n\n✔️ Πιο πλούσια γεύση\n✔️ Τραγανή κόρα\n✔️ Ομοιόμορφο αποτέλεσμα.',
   facebook_a_cta: 'Γράψε μας για δωρεάν δείγμα →',
-  facebook_a_hashtags: '#αρτοποιία #ψωμί #laoudisfoods #βελτιωτικό #αρτοποιός #slowfermentation #breadmaking',
+  facebook_a_hashtags: '#αρτοποιία #ψωμί #laoudisfoods',
   facebook_b_title: 'Αποτελέσματα που μιλούν μόνα τους',
-  facebook_b_hook: '✨ Φανταστείτε κάθε καρβέλι να βγαίνει τέλειο. Όχι τυχαία — συστηματικά.',
-  facebook_b_body: '🎯 Λιγότερα reject προϊόντα\n🎯 Εξοικονόμηση κόστους υλικών\n🎯 Ευχαριστημένοι πελάτες που επιστρέφουν\n\nΤο Optilis Ireks ελέγχει τη ζύμωση, σταματά τα ανεπιθύμητα φουσκαλάκια και εγγυάται λεία, γυαλιστερή κόρα.',
+  facebook_b_hook: '✨ Φανταστείτε κάθε καρβέλι να βγαίνει τέλειο. Όχι τυχαία.',
+  facebook_b_body: '🎯 Λιγότερα reject προϊόντα\n🎯 Εξοικονόμηση κόστους υλικών\n🎯 Ευχαριστημένοι πελάτες.',
   facebook_b_cta: 'Δες το προϊόν στο laoudis.gr',
-  facebook_b_hashtags: '#laoudisfoods #breadimprover #αρτοποιία #ποιότητα #επαγγελματίας',
+  facebook_b_hashtags: '#laoudisfoods #breadimprover',
   instagram_hook: '🍞 Το βελτιωτικό που αλλάζει τα πάντα στην αργή ζύμωση.',
-  instagram_body: 'Ξέρεις εκείνη τη στιγμή που ανοίγεις τον φούρνο και το αποτέλεσμα... δεν είναι αυτό που περίμενες;\n\nΤο Optilis Ireks by Laoudis Foods λύνει ακριβώς αυτό:\n\n▸ Ελέγχει τη ζύμωση σε ψυγείο 12-72 ώρες\n▸ Εξαλείφει ανεπιθύμητα φουσκαλάκια\n▸ Εγγυάται τραγανή, γυαλιστερή κόρα\n\nΑποτέλεσμα; Κάθε καρβέλι σαν να βγήκε από επαγγελματικό αρτοποιείο.',
-  instagram_save: 'Αποθήκευσε το post για να το δείξεις στο αρτοποιείο σου',
-  instagram_cta: '🔗 Link in bio για δείγμα',
-  instagram_hashtags: '#αρτοποιία #ψωμί #laoudisfoods #breadmaking #artisanbread',
-  instagram_keywords: 'βελτιωτικό αρτοποιίας, αργή ζύμωση, επαγγελματικό ψωμί',
-  linkedin_hook: 'Η αργή ζύμωση δεν είναι απλώς τάση. Είναι η επόμενη πρόκληση για επαγγελματίες αρτοποιούς.',
-  linkedin_body: 'Το 73% των αρτοποιείων που υιοθέτησαν slow fermentation αναφέρει αύξηση στην επαναλαμβανόμενη αγορά.\n\nΗ πρόκληση; Η ελεγχόμενη ζύμωση σε ψυγείο απαιτεί ακρίβεια που δεν συγχωρεί λάθη.\n\nΤο Optilis Ireks by Laoudis Foods σχεδιάστηκε για αυτό ακριβώς το πρόβλημα:\n→ Συμμετοχή μόλις 0.5%\n→ Αποτρέπει υπερβολική ζύμωση\n→ Σταθερά αποτελέσματα σε κάθε παρτίδα\n\nΑν δουλεύεις με slow fermentation, αξίζει να το δοκιμάσεις.',
-  linkedin_comment: 'Δουλεύετε με αργή ζύμωση στο αρτοποιείο σας; Ποια είναι η μεγαλύτερη πρόκληση που αντιμετωπίζετε;',
+  instagram_body: 'Το Optilis Ireks by Laoudis Foods λύνει ακριβώς αυτό:\n\n▸ Ελέγχει τη ζύμωση\n▸ Εξαλείφει φουσκαλάκια\n▸ Εγγυάται τραγανή κόρα.',
+  instagram_save: 'Αποθήκευσε το post',
+  instagram_cta: '🔗 Link in bio',
+  instagram_hashtags: '#αρτοποιία #ψωμί #laoudisfoods',
+  instagram_keywords: 'βελτιωτικό αρτοποιίας, αργή ζύμωση',
+  linkedin_hook: 'Η αργή ζύμωση δεν είναι απλώς τάση. Είναι πρόκληση.',
+  linkedin_body: 'Το 73% των αρτοποιείων αναφέρει αύξηση πωλήσεων με το σωστό improver. Το Optilis Ireks είναι η λύση.',
+  linkedin_comment: 'Δουλεύετε με αργή ζύμωση;',
   linkedin_cta: 'Ακολουθήστε για περισσότερα',
-  linkedin_hashtags: '#bakery #foodindustry #laoudisfoods #artisanbread',
-  tiktok_hook: '"Γιατί το ψωμί σου από το ψυγείο δεν γίνεται ποτέ σωστό;" — Δες τη λύση.',
-  tiktok_script: '1. HOOK (0-3s): Κοντινό πλάνο σε ψωμί με ατέλειες\n2. PROBLEM (3-8s): Εξήγηση τι πάει στραβά στην αργή ζύμωση\n3. SOLUTION (8-15s): Παρουσίαση Optilis Ireks\n4. RESULT (15-25s): Time-lapse του τέλειου αποτελέσματος\n5. CTA (25-30s): "Σχολίασε ΖΥΜΗ για να μάθεις περισσότερα"',
-  tiktok_overlay: '"Το μυστικό;" → "0.5% στη ζύμη" → "Τέλειο αποτέλεσμα κάθε φορά"',
-  tiktok_hashtags: '#αρτοποιία #ψωμί #laoudis #breadtok #slowfermentation',
-  imageUrl: 'https://image.pollinations.ai/prompt/professional%20artisan%20bread%20loaf%2C%20golden%20crust%2C%20dark%20moody%20bakery%20background%2C%20minimalist%20composition%2C%2040%25%20negative%20space%20left%2C%20no%20text%2C%20cinematic%20lighting?width=1024&height=1024&nologo=true',
+  linkedin_hashtags: '#bakery #foodindustry',
+  tiktok_hook: '"Γιατί το ψωμί σου δεν γίνεται ποτέ σωστό;"',
+  tiktok_script: '1. HOOK: Κοντινό πλάνο\n2. PROBLEM: Τι πάει στραβά\n3. SOLUTION: Optilis Ireks\n4. CTA: Σχολίασε ΖΥΜΗ',
+  tiktok_overlay: '"Το μυστικό?" → "0.5% στη ζύμη"',
+  tiktok_hashtags: '#αρτοποιία #breadtok',
+  imageUrl: 'https://image.pollinations.ai/prompt/professional%20artisan%20bread%20loaf?width=1024&height=1024',
   svgHeadline: 'Τέλεια Κόρα. Κάθε Φορά.',
   svgCta: 'ΜΑΘΕ ΠΕΡΙΣΣΟΤΕΡΑ'
 };
 
-/*
-========================================================
-STATE VARIABLES
-Ο "κινητήρας" της εφαρμογής.
-loadingInterval: κρατάει το ID του setInterval
-ώστε να μπορούμε να το σταματήσουμε μετά.
-========================================================
-*/
-let loadingInterval = null;
-
-/*
-========================================================
-GENERATE FUNCTION
-Καλείται όταν ο χρήστης πατάει το κουμπί.
-
-Βήματα:
-1. Validation — έλεγχος required fields
-2. UI transition — form → loading state
-3. fetch() POST στο webhook
-4. Error handling — fallback σε demo mode
-5. renderResults() — γεμίζει το DOM με τα δεδομένα
-========================================================
-*/
 async function generate() {
-  // 1. COLLECT FORM VALUES
-  const topic    = document.getElementById('topic').value.trim();
-  const url      = document.getElementById('productUrl').value.trim();
-  const tone     = document.getElementById('tone').value;
-  const style    = document.getElementById('style').value;
-  const email    = document.getElementById('email').value.trim();
+  const topic = document.getElementById('topic').value.trim();
+  const url = document.getElementById('productUrl').value.trim();
+  const tone = document.getElementById('tone').value;
+  const style = document.getElementById('style').value;
+  const email = document.getElementById('email').value.trim();
 
-  // 2. VALIDATION
-  if (!topic || !tone || !style || !email) {
-    alert('Παρακαλώ συμπλήρωσε όλα τα υποχρεωτικά πεδία.');
-    return;
-  }
+  if (!topic || !tone || !style || !email) { alert('Συμπλήρωσε τα υποχρεωτικά πεδία.'); return; }
 
-  // 3. UI: Show loading, hide form & results
   document.querySelector('.card').style.display = 'none';
   document.getElementById('results').style.display = 'none';
   document.getElementById('loading').style.display = 'block';
   document.getElementById('generateBtn').disabled = true;
 
-  // 4. ROTATE LOADING MESSAGES every 2.5 seconds
-  let msgIndex = 0;
-  loadingInterval = setInterval(() => {
-    msgIndex = (msgIndex + 1) % LOADING_MSGS.length;
-    document.getElementById('loadingText').textContent = LOADING_MSGS[msgIndex];
-  }, 2500);
-
-  /*
-  ----------------------------------------------------------
-  PAYLOAD STRUCTURE
-  Πρέπει να ταιριάζει ΑΚΡΙΒΩΣ με τα field names
-  που χρησιμοποιεί το n8n workflow:
-  - "Τίτλος Προϊόντος..." → Market Research + Copywrite prompts
-  - "Tone of Voice..."    → Copywrite prompt
-  - "Στυλ..."             → Copywrite prompt
-  - "Αποστολή στο Email" → Gmail node To field
-  - "topic"               → Google Search query ($json["topic"])
-  - "productUrl"          → HTTP Request URL ($json["productUrl"])
-  ----------------------------------------------------------
-  */
-  const payload = {
-    "Τίτλος Προϊόντος ή Θέμα / Product title or Theme": topic,
-    "Tone of Voice (Mood) / Τόνος ": tone,
-    "Στυλ / Visual Style": style,
-    "Αποστολή στο Email": email,
-    "topic": topic,      // για το Google Search node
-    "productUrl": url    // για το HTTP Request node
-  };
-
-  let data = null;
-  let isDemo = false;
+  const interval = setInterval(() => {
+    const text = document.getElementById('loadingText');
+    const randomIndex = Math.floor(Math.random() * LOADING_MSGS.length);
+    text.textContent = LOADING_MSGS[randomIndex];
+  }, 2000);
 
   try {
-    // 5. FETCH CALL — POST to n8n webhook
-    // timeout: 120 δευτερόλεπτα (το workflow μπορεί να πάρει χρόνο)
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 120000);
-
-    const response = await fetch(WEBHOOK_URL, {
+    const res = await fetch(WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-      signal: controller.signal
+      body: JSON.stringify({ "Τίτλος Προϊόντος": topic, "Tone of Voice": tone, "Στυλ": style, "Αποστολή στο Email": email, "topic": topic, "productUrl": url })
     });
-
-    clearTimeout(timeout);
-
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    data = await response.json();
-
-  } catch (err) {
-    /*
-    6. ERROR HANDLING — Demo Fallback
-    Αν το fetch αποτύχει (n8n offline, CORS, timeout),
-    χρησιμοποιούμε τα mock δεδομένα και δείχνουμε banner.
-    */
-    console.warn('n8n unreachable, using demo data:', err.message);
-    data = MOCK;
-    isDemo = true;
-  }
-
-  // 7. STOP LOADING, SHOW RESULTS
-  clearInterval(loadingInterval);
-  document.getElementById('loading').style.display = 'none';
-
-  if (isDemo) {
+    
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    clearInterval(interval);
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('generateBtn').disabled = false;
+    renderResults(data);
+  } catch (e) {
+    clearInterval(interval);
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('generateBtn').disabled = false;
     document.getElementById('demoBanner').style.display = 'block';
+    renderResults(MOCK);
   }
-
-  renderResults(data);
 }
 
-/*
-========================================================
-RENDER RESULTS FUNCTION
-Δέχεται το JSON από το n8n (ή το MOCK)
-και χτίζει δυναμικά το DOM.
-
-Χρησιμοποιεί template literals για κάθε platform card.
-Κάθε card έχει platform color, tabs (όπου χρειάζεται),
-και copy buttons.
-========================================================
-*/
 function renderResults(d) {
   const container = document.getElementById('results');
-
   container.innerHTML = `
-
-    <!-- FACEBOOK CARD — Tabs για A/B variations -->
-    <div class="platform-card">
+    <div class="platform-card" id="fb-card">
       <div class="platform-header" onclick="toggleCard('fb-body')">
-        <div class="platform-label">
-          <div class="platform-dot dot-fb"></div>
-          📘 Facebook
-        </div>
-        <span style="color:var(--muted);font-size:12px">A/B Testing ▾</span>
+        <div class="platform-label"><div class="platform-dot dot-fb"></div> 📘 Facebook</div>
+        <span>▾</span>
       </div>
       <div class="platform-body" id="fb-body">
         <div class="tabs">
-          <div class="tab active" onclick="switchTab('fb','a')">Variation A — Hook</div>
-          <div class="tab" onclick="switchTab('fb','b')">Variation B — Benefit</div>
+          <div class="tab active" onclick="switchTab('fb','a')">A</div>
+          <div class="tab" onclick="switchTab('fb','b')">B</div>
         </div>
         <div class="tab-pane active" id="fb-a">
-          ${contentBlock('Τίτλος', d.facebook_a_title)}
-          ${contentBlock('Hook', d.facebook_a_hook)}
-          ${contentBlock('Body', d.facebook_a_body)}
-          ${contentBlock('CTA', d.facebook_a_cta)}
-          ${contentBlock('Hashtags', d.facebook_a_hashtags)}
+          ${contentBlock('Τίτλος', d.facebook_a_title)} ${contentBlock('Hook', d.facebook_a_hook)} ${contentBlock('Body', d.facebook_a_body)} ${contentBlock('CTA', d.facebook_a_cta)}
         </div>
         <div class="tab-pane" id="fb-b">
-          ${contentBlock('Τίτλος', d.facebook_b_title)}
-          ${contentBlock('Hook', d.facebook_b_hook)}
-          ${contentBlock('Body', d.facebook_b_body)}
-          ${contentBlock('CTA', d.facebook_b_cta)}
-          ${contentBlock('Hashtags', d.facebook_b_hashtags)}
+          ${contentBlock('Τίτλος', d.facebook_b_title)} ${contentBlock('Hook', d.facebook_b_hook)} ${contentBlock('Body', d.facebook_b_body)} ${contentBlock('CTA', d.facebook_b_cta)}
         </div>
       </div>
     </div>
-
-    <!-- INSTAGRAM CARD -->
+    
     <div class="platform-card">
-      <div class="platform-header" onclick="toggleCard('ig-body')">
-        <div class="platform-label">
-          <div class="platform-dot dot-ig"></div>
-          📸 Instagram
+        <div class="platform-header" onclick="toggleCard('ig-body')">
+            <div class="platform-label"><div class="platform-dot dot-ig"></div> 📸 Instagram</div>
+            <span>▾</span>
         </div>
-        <span style="color:var(--muted);font-size:12px">▾</span>
-      </div>
-      <div class="platform-body" id="ig-body">
-        ${contentBlock('Hook', d.instagram_hook)}
-        ${contentBlock('Body / Caption', d.instagram_body)}
-        ${contentBlock('Save Trigger', d.instagram_save)}
-        ${contentBlock('CTA', d.instagram_cta)}
-        ${contentBlock('Hashtags', d.instagram_hashtags)}
-        ${contentBlock('Keywords (SEO)', d.instagram_keywords)}
-      </div>
+        <div class="platform-body" id="ig-body">
+            ${contentBlock('Hook', d.instagram_hook)} ${contentBlock('Caption', d.instagram_body)} ${contentBlock('CTA', d.instagram_cta)}
+        </div>
     </div>
 
-    <!-- LINKEDIN CARD -->
-    <div class="platform-card">
-      <div class="platform-header" onclick="toggleCard('li-body')">
-        <div class="platform-label">
-          <div class="platform-dot dot-li"></div>
-          💼 LinkedIn
-        </div>
-        <span style="color:var(--muted);font-size:12px">▾</span>
-      </div>
-      <div class="platform-body" id="li-body">
-        ${contentBlock('Hook', d.linkedin_hook)}
-        ${contentBlock('Body', d.linkedin_body)}
-        ${contentBlock('CTA', d.linkedin_cta)}
-        ${contentBlock('First Comment', d.linkedin_comment)}
-        ${contentBlock('Hashtags', d.linkedin_hashtags)}
-      </div>
-    </div>
-
-    <!-- TIKTOK CARD -->
-    <div class="platform-card">
-      <div class="platform-header" onclick="toggleCard('tt-body')">
-        <div class="platform-label">
-          <div class="platform-dot dot-tt"></div>
-          🎵 TikTok
-        </div>
-        <span style="color:var(--muted);font-size:12px">▾</span>
-      </div>
-      <div class="platform-body" id="tt-body">
-        ${contentBlock('Retention Hook (1-3 sec)', d.tiktok_hook)}
-        ${contentBlock('Script Outline', d.tiktok_script)}
-        ${contentBlock('Text Overlay', d.tiktok_overlay)}
-        ${contentBlock('Hashtags', d.tiktok_hashtags)}
-      </div>
-    </div>
-
-    <!-- IMAGE CARD -->
-    <div class="platform-card">
-      <div class="platform-header" onclick="toggleCard('vis-body')">
-        <div class="platform-label">
-          <div class="platform-dot dot-vis"></div>
-          🎨 Visual
-        </div>
-        <span style="color:var(--muted);font-size:12px">▾</span>
-      </div>
-      <div class="platform-body" id="vis-body">
-        ${d.imageUrl ? `<img class="image-preview" src="${d.imageUrl}" alt="Generated visual" loading="lazy" />` : ''}
-        ${contentBlock('SVG Headline', d.svgHeadline || '—')}
-        ${contentBlock('CTA', d.svgCta || '—')}
-        ${d.imageUrl ? `
-        <div class="image-actions">
-          <a href="${d.imageUrl}" target="_blank" class="btn-sm btn-outline">🔗 Άνοιγμα εικόνας</a>
-          <a href="${d.imageUrl}" download="socialforge-image.jpg" class="btn-sm btn-solid">⬇ Download</a>
-        </div>` : ''}
-      </div>
-    </div>
-
-    <!-- RESET BUTTON -->
-    <button class="btn-generate" onclick="reset()" style="margin-top:8px;background:transparent;border:1px solid var(--border);color:var(--muted)">
-      ← Νέο Generate
-    </button>
+    <button class="btn-generate" onclick="location.reload()" style="background:transparent; border:1px solid var(--border)">← Νέο Generate</button>
   `;
-
   container.style.display = 'block';
 }
 
-/*
-========================================================
-HELPER: contentBlock()
-Δημιουργεί ένα label + text + copy button block.
-Κληρώνεται για κάθε section μέσα στα platform cards.
-Η unique ID βασίζεται στο timestamp για αποφυγή conflicts.
-========================================================
-*/
-function contentBlock(label, text) {
-  if (!text) return '';
+function contentBlock(l, t) {
+  if (!t) return '';
   const id = 'cb_' + Math.random().toString(36).substr(2,6);
-  return `
-    <div class="content-section">
-      <div class="content-label">${label}</div>
-      <div class="content-text" id="${id}">${text}</div>
-      <button class="copy-btn" onclick="copyText('${id}', this)">Copy</button>
-    </div>
-  `;
+  return `<div class="content-section"><div class="content-label">${l}</div><div class="content-text" id="${id}">${t}</div><button class="copy-btn" onclick="copyText('${id}', this)">Copy</button></div>`;
 }
 
-/*
-========================================================
-HELPER: copyText()
-Χρησιμοποιεί το Clipboard API για copy.
-Αλλάζει το button σε "Copied!" για visual feedback.
-========================================================
-*/
 function copyText(id, btn) {
-  const text = document.getElementById(id).innerText;
-  navigator.clipboard.writeText(text).then(() => {
+  navigator.clipboard.writeText(document.getElementById(id).innerText).then(() => {
     btn.textContent = '✓ Copied!';
     btn.classList.add('copied');
-    setTimeout(() => {
-      btn.textContent = 'Copy';
-      btn.classList.remove('copied');
-    }, 2000);
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
   });
 }
 
-/*
-========================================================
-HELPER: toggleCard()
-Collapsible cards — κάνει show/hide το platform body.
-Βελτιώνει usability όταν υπάρχουν πολλά αποτελέσματα.
-========================================================
-*/
 function toggleCard(id) {
   const el = document.getElementById(id);
-  el.style.display = el.style.display === 'none' ? 'block' : '';
+  el.style.display = (el.style.display === 'none') ? 'block' : 'none';
 }
 
-/*
-========================================================
-HELPER: switchTab()
-Για τα Facebook A/B tabs.
-Αλλάζει active class και εμφανίζει/κρύβει panes.
-========================================================
-*/
-function switchTab(platform, variant) {
-  document.querySelectorAll(`#${platform}-a, #${platform}-b`).forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => {
-    if (t.closest(`[id^="${platform}"]`) || t.parentElement.parentElement.id === `${platform}-body`) {
-      t.classList.remove('active');
-    }
-  });
-  document.getElementById(`${platform}-${variant}`).classList.add('active');
+function switchTab(p, t) {
+  const card = document.getElementById(`${p}-card`);
+  card.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  card.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
   event.target.classList.add('active');
-}
-
-/*
-========================================================
-RESET FUNCTION
-Επιστρέφει στην αρχική κατάσταση.
-========================================================
-*/
-function reset() {
-  document.getElementById('results').style.display = 'none';
-  document.getElementById('demoBanner').style.display = 'none';
-  document.querySelector('.card').style.display = 'block';
-  document.getElementById('generateBtn').disabled = false;
+  document.getElementById(`${p}-${t}`).classList.add('active');
 }
 </script>
 </body>
