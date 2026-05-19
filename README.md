@@ -24,6 +24,7 @@
 
 ## Αρχιτεκτονική
 
+```
 UI (HTML/CSS/JS)
 │
 │ HTTP POST (JSON)
@@ -48,6 +49,7 @@ Gmail Node              (αποστολή σε email της επιλογής)
 ▼
 Respond to Webhook      (JSON response → UI)
 
+```
 ---
 
 ## Tech Stack
