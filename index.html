@@ -6,26 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SocialForge AI</title>
 
-  <!--
-    ========================================================
-    FONTS
-    Syne: geometric display font για headers — δίνει
-    το "tech tool" feeling χωρίς να είναι cliché.
-    DM Sans: modern humanist sans για body text —
-    εξαιρετικά readable, λιγότερο generic από Inter.
-    ========================================================
-  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
-    /*
-    ========================================================
-    CSS VARIABLES — Design System
-    Όλα τα χρώματα σε ένα σημείο. Έτσι αν θέλεις να
-    αλλάξεις το brand color, αλλάζεις μόνο εδώ.
-    ========================================================
-    */
     :root {
       --bg:          #08080e;
       --surface:     #111118;
@@ -33,26 +17,16 @@
       --text:        #f0f0f5;
       --muted:       #6b6b80;
       --accent:      #4f8ef7;
-
-      /* Platform colors — χρησιμοποιούνται στα cards */
       --fb:   #1877F2;
       --ig:   #E1306C;
       --li:   #0A66C2;
       --tt:   #ffffff;
       --vis:  #7c3aed;
-
       --radius: 12px;
       --font-head: 'Syne', sans-serif;
       --font-body: 'DM Sans', sans-serif;
     }
 
-    /*
-    ========================================================
-    RESET & BASE
-    box-sizing: border-box σε όλα — αποφεύγει
-    υπολογισμούς με padding/width.
-    ========================================================
-    */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -64,14 +38,6 @@
       min-height: 100vh;
     }
 
-    /*
-    ========================================================
-    GRAIN OVERLAY
-    Ένα subtle noise texture πάνω από το background.
-    Δίνει depth και αποφεύγει το "flat" AI look.
-    Χρησιμοποιεί SVG filter με feTurbulence.
-    ========================================================
-    */
     body::before {
       content: '';
       position: fixed; inset: 0;
@@ -80,13 +46,6 @@
       z-index: 0;
     }
 
-    /*
-    ========================================================
-    LAYOUT WRAPPER
-    max-width: 760px — αρκετά φαρδύ για content,
-    αρκετά στενό για readability. Centered με auto margins.
-    ========================================================
-    */
     .wrapper {
       max-width: 760px;
       margin: 0 auto;
@@ -95,13 +54,6 @@
       z-index: 1;
     }
 
-    /*
-    ========================================================
-    HEADER
-    Το logo/tagline section. Το badge "AI-POWERED"
-    δίνει instant context για portfolio viewers.
-    ========================================================
-    */
     header {
       text-align: center;
       margin-bottom: 48px;
@@ -122,7 +74,7 @@
 
     header h1 {
       font-family: var(--font-head);
-      font-size: clamp(2rem, 6vw, 3.2rem); /* clamp = responsive χωρίς media queries */
+      font-size: clamp(2rem, 6vw, 3.2rem);
       font-weight: 800;
       letter-spacing: -1px;
       line-height: 1.1;
@@ -138,13 +90,6 @@
       margin: 0 auto;
     }
 
-    /*
-    ========================================================
-    DEMO BANNER
-    Εμφανίζεται όταν το n8n δεν τρέχει.
-    Ενημερώνει τον portfolio viewer χωρίς να σπάει το UX.
-    ========================================================
-    */
     .demo-banner {
       background: #1a120a;
       border: 1px solid #3d2b0a;
@@ -154,17 +99,9 @@
       border-radius: 8px;
       margin-bottom: 28px;
       text-align: center;
-      display: none; /* εμφανίζεται μόνο σε demo mode μέσω JS */
+      display: none;
     }
 
-    /*
-    ========================================================
-    FORM CARD
-    Το κεντρικό input panel. Surface color (#111118)
-    διαφοροποιείται ελαφρά από το background.
-    Border με λεπτή γραμμή για definition.
-    ========================================================
-    */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -183,21 +120,14 @@
       margin-bottom: 24px;
     }
 
-    /*
-    ========================================================
-    FORM ELEMENTS
-    Label πάνω, input κάτω — πιο accessible από placeholders.
-    Gap: 20px μεταξύ fields για breathing room.
-    ========================================================
-    */
     .form-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr; /* 2 columns στο desktop */
+      grid-template-columns: 1fr 1fr;
       gap: 20px;
     }
 
     .field { display: flex; flex-direction: column; gap: 6px; }
-    .field.full { grid-column: 1 / -1; } /* full width field */
+    .field.full { grid-column: 1 / -1; }
 
     label {
       font-size: 12px;
@@ -206,7 +136,6 @@
       letter-spacing: 0.5px;
     }
 
-    /* required star */
     label .req { color: var(--accent); margin-left: 2px; }
 
     input, select {
@@ -222,7 +151,6 @@
       outline: none;
     }
 
-    /* Focus state — accessibility + aesthetic */
     input:focus, select:focus {
       border-color: var(--accent);
       box-shadow: 0 0 0 3px rgba(79,142,247,0.12);
@@ -230,13 +158,6 @@
 
     select option { background: #1a1a2e; }
 
-    /*
-    ========================================================
-    SUBMIT BUTTON
-    Full-width, solid accent color. Transform on hover
-    για tactile feel. Disabled state κατά το loading.
-    ========================================================
-    */
     .btn-generate {
       width: 100%;
       margin-top: 28px;
@@ -256,13 +177,6 @@
     .btn-generate:hover { transform: translateY(-1px); opacity: 0.92; }
     .btn-generate:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-    /*
-    ========================================================
-    LOADING STATE
-    3 animated dots — CSS keyframe animation.
-    Κάθε dot έχει animation-delay για "wave" effect.
-    ========================================================
-    */
     #loading {
       display: none;
       text-align: center;
@@ -293,13 +207,6 @@
 
     @keyframes pulse { 0%,100% { opacity:0.5; } 50% { opacity:1; } }
 
-    /*
-    ========================================================
-    RESULTS SECTION
-    Κρυφό αρχικά, εμφανίζεται μετά το API call.
-    Fade-in animation για smooth reveal.
-    ========================================================
-    */
     #results {
       display: none;
       animation: fadeUp 0.4s ease;
@@ -310,13 +217,6 @@
       to   { opacity:1; transform:translateY(0); }
     }
 
-    /*
-    ========================================================
-    PLATFORM CARDS
-    Κάθε πλατφόρμα έχει το brand color της ως
-    left border (4px). Subtle top gradient για depth.
-    ========================================================
-    */
     .platform-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -331,7 +231,7 @@
       justify-content: space-between;
       padding: 16px 20px;
       border-bottom: 1px solid var(--border);
-      cursor: pointer; /* collapsible */
+      cursor: pointer;
       user-select: none;
     }
 
@@ -344,7 +244,6 @@
       font-weight: 700;
     }
 
-    /* Το χρωματιστό dot δίπλα στο όνομα πλατφόρμας */
     .dot-fb { background: var(--fb); }
     .dot-ig { background: var(--ig); }
     .dot-li { background: var(--li); }
@@ -359,13 +258,6 @@
 
     .platform-body { padding: 20px; }
 
-    /*
-    ========================================================
-    VARIATION TABS
-    Για το Facebook A/B — tab navigation.
-    Active tab έχει accent underline.
-    ========================================================
-    */
     .tabs { display: flex; gap: 0; margin-bottom: 20px; border-bottom: 1px solid var(--border); }
 
     .tab {
@@ -384,13 +276,6 @@
     .tab-pane { display: none; }
     .tab-pane.active { display: block; }
 
-    /*
-    ========================================================
-    CONTENT BLOCKS
-    Κάθε section μέσα στο platform card (hook, body κλπ)
-    έχει label + content. Copy button εμφανίζεται on hover.
-    ========================================================
-    */
     .content-section { margin-bottom: 20px; }
     .content-section:last-child { margin-bottom: 0; }
 
@@ -407,17 +292,10 @@
       font-size: 14px;
       line-height: 1.7;
       color: var(--text);
-      white-space: pre-wrap; /* διατηρεί line breaks από το AI */
+      white-space: pre-wrap;
       word-break: break-word;
     }
 
-    /*
-    ========================================================
-    COPY BUTTON
-    Εμφανίζεται πάντα (όχι μόνο hover) για mobile-friendly.
-    Μικρό, discrete, αλλάζει σε "Copied!" για feedback.
-    ========================================================
-    */
     .copy-btn {
       margin-top: 8px;
       background: transparent;
@@ -433,13 +311,6 @@
     .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
     .copy-btn.copied { border-color: #22c55e; color: #22c55e; }
 
-    /*
-    ========================================================
-    IMAGE SECTION
-    Η εικόνα φορτώνει lazy (loading="lazy").
-    Skeleton placeholder ενώ φορτώνει.
-    ========================================================
-    */
     .image-preview {
       width: 100%;
       aspect-ratio: 1;
@@ -475,12 +346,6 @@
       color: #fff;
     }
 
-    /*
-    ========================================================
-    RESPONSIVE
-    Στο mobile: 1 column grid, μικρότερο padding
-    ========================================================
-    */
     @media (max-width: 600px) {
       .form-grid { grid-template-columns: 1fr; }
       .card { padding: 20px; }
@@ -491,34 +356,16 @@
 <body>
 <div class="wrapper">
 
-  <!-- ========================================================
-    HEADER SECTION
-    Το brand identity της εφαρμογής.
-    Το <span> βάζει accent color στη λέξη "AI".
-  ======================================================== -->
   <header>
     <div class="badge">AI-POWERED · n8n AUTOMATION</div>
     <h1>Social<span>Forge</span> AI</h1>
     <p>Δώσε ένα θέμα. Πάρε έτοιμο content για κάθε πλατφόρμα.</p>
   </header>
 
-  <!-- Demo banner — κρυφό αρχικά, εμφανίζεται από JS -->
   <div class="demo-banner" id="demoBanner">
     ⚡ Demo Mode — Προβολή mock δεδομένων. Για live χρήση απαιτείται το n8n να τρέχει locally.
   </div>
 
-  <!-- ========================================================
-    INPUT FORM CARD
-    5 fields:
-    1. Τίτλος/Θέμα (required) — το κυρίαρχο input
-    2. URL (optional) — για product pages
-    3. Tone of Voice (select) — 4 επιλογές
-    4. Visual Style (select) — 4 επιλογές  
-    5. Email (required) — για αποστολή αποτελεσμάτων
-
-    ΤΑ FIELD NAMES στο JS πρέπει να ταιριάζουν ΑΚΡΙΒΩΣ
-    με αυτά που περιμένει το n8n webhook.
-  ======================================================== -->
   <div class="card">
     <div class="card-title">— Input</div>
 
@@ -568,12 +415,6 @@
     </button>
   </div>
 
-  <!-- ========================================================
-    LOADING STATE
-    Εμφανίζεται μόνο κατά την κλήση του webhook.
-    Τα 3 dots έχουν staggered animation για wave effect.
-    Το loading-text αλλάζει κάθε 2 δευτερόλεπτα μέσω JS.
-  ======================================================== -->
   <div id="loading">
     <div class="dots">
       <div class="dot"></div>
@@ -583,32 +424,22 @@
     <div class="loading-text" id="loadingText">Αναλύω το προϊόν...</div>
   </div>
 
-  <!-- ========================================================
-    RESULTS SECTION
-    Γεμίζει δυναμικά από JS μετά το API response.
-    Αρχικά hidden (display:none).
-  ======================================================== -->
   <div id="results"></div>
 
-</div><!-- /wrapper -->
+</div>
 
 <script>
 /*
 ========================================================
 CONFIGURATION
-Το webhook URL. Αλλάζει μόνο αυτό αν μετακινηθεί
-το n8n σε server ή αλλάξει port.
+Για live testing με ngrok αλλάζεις μόνο αυτή τη γραμμή:
+const WEBHOOK_URL = 'https://xxxx.ngrok-free.app/webhook/socialforge';
+Για τοπικό testing (index.html με διπλό κλικ) αφήνεις:
+const WEBHOOK_URL = 'http://localhost:5678/webhook/socialforge';
 ========================================================
 */
 const WEBHOOK_URL = 'http://localhost:5678/webhook/socialforge';
 
-/*
-========================================================
-LOADING MESSAGES
-Εναλλάσσονται κάθε 2 δευτερόλεπτα κατά το loading.
-Δίνουν αίσθηση ότι "κάτι συμβαίνει" στο background.
-========================================================
-*/
 const LOADING_MSGS = [
   'Αναλύω το προϊόν...',
   'Κάνω research στο internet...',
@@ -620,13 +451,6 @@ const LOADING_MSGS = [
   'Τελικές πινελιές...'
 ];
 
-/*
-========================================================
-MOCK DATA — Demo Mode
-Όταν το n8n δεν τρέχει, χρησιμοποιείται αυτό.
-Είναι realistic data ώστε το demo να φαίνεται αληθινό.
-========================================================
-*/
 const MOCK = {
   facebook_a_title: 'Το μυστικό του τέλειου ψωμιού',
   facebook_a_hook: '🍞 Γιατί το ψωμί σου κολλάει στο ψυγείο; Και γιατί αυτοί που ξέρουν, δεν σου το λένε.',
@@ -658,84 +482,45 @@ const MOCK = {
   svgCta: 'ΜΑΘΕ ΠΕΡΙΣΣΟΤΕΡΑ'
 };
 
-/*
-========================================================
-STATE VARIABLES
-Ο "κινητήρας" της εφαρμογής.
-loadingInterval: κρατάει το ID του setInterval
-ώστε να μπορούμε να το σταματήσουμε μετά.
-========================================================
-*/
 let loadingInterval = null;
 
-/*
-========================================================
-GENERATE FUNCTION
-Καλείται όταν ο χρήστης πατάει το κουμπί.
-
-Βήματα:
-1. Validation — έλεγχος required fields
-2. UI transition — form → loading state
-3. fetch() POST στο webhook
-4. Error handling — fallback σε demo mode
-5. renderResults() — γεμίζει το DOM με τα δεδομένα
-========================================================
-*/
 async function generate() {
-  // 1. COLLECT FORM VALUES
-  const topic    = document.getElementById('topic').value.trim();
-  const url      = document.getElementById('productUrl').value.trim();
-  const tone     = document.getElementById('tone').value;
-  const style    = document.getElementById('style').value;
-  const email    = document.getElementById('email').value.trim();
+  const topic  = document.getElementById('topic').value.trim();
+  const url    = document.getElementById('productUrl').value.trim();
+  const tone   = document.getElementById('tone').value;
+  const style  = document.getElementById('style').value;
+  const email  = document.getElementById('email').value.trim();
 
-  // 2. VALIDATION
   if (!topic || !tone || !style || !email) {
     alert('Παρακαλώ συμπλήρωσε όλα τα υποχρεωτικά πεδία.');
     return;
   }
 
-  // 3. UI: Show loading, hide form & results
   document.querySelector('.card').style.display = 'none';
   document.getElementById('results').style.display = 'none';
   document.getElementById('loading').style.display = 'block';
   document.getElementById('generateBtn').disabled = true;
 
-  // 4. ROTATE LOADING MESSAGES every 2.5 seconds
   let msgIndex = 0;
+  document.getElementById('loadingText').textContent = LOADING_MSGS[msgIndex];
   loadingInterval = setInterval(() => {
     msgIndex = (msgIndex + 1) % LOADING_MSGS.length;
     document.getElementById('loadingText').textContent = LOADING_MSGS[msgIndex];
   }, 2500);
 
-  /*
-  ----------------------------------------------------------
-  PAYLOAD STRUCTURE
-  Πρέπει να ταιριάζει ΑΚΡΙΒΩΣ με τα field names
-  που χρησιμοποιεί το n8n workflow:
-  - "Τίτλος Προϊόντος..." → Market Research + Copywrite prompts
-  - "Tone of Voice..."    → Copywrite prompt
-  - "Στυλ..."             → Copywrite prompt
-  - "Αποστολή στο Email" → Gmail node To field
-  - "topic"               → Google Search query ($json["topic"])
-  - "productUrl"          → HTTP Request URL ($json["productUrl"])
-  ----------------------------------------------------------
-  */
   const payload = {
     "Τίτλος Προϊόντος ή Θέμα / Product title or Theme": topic,
     "Tone of Voice (Mood) / Τόνος ": tone,
     "Στυλ / Visual Style": style,
     "Αποστολή στο Email": email,
-    "topic": topic,      // για το Google Search node
-    "productUrl": url    // για το HTTP Request node
+    "topic": topic,
+    "productUrl": url
   };
 
   let data = null;
   let isDemo = false;
 
   try {
-    // 5. FETCH CALL — POST to n8n webhook
-    // timeout: 120 δευτερόλεπτα (το workflow μπορεί να πάρει χρόνο)
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 120000);
 
@@ -747,50 +532,30 @@ async function generate() {
     });
 
     clearTimeout(timeout);
-
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     data = await response.json();
 
   } catch (err) {
-    /*
-    6. ERROR HANDLING — Demo Fallback
-    Αν το fetch αποτύχει (n8n offline, CORS, timeout),
-    χρησιμοποιούμε τα mock δεδομένα και δείχνουμε banner.
-    */
     console.warn('n8n unreachable, using demo data:', err.message);
     data = MOCK;
     isDemo = true;
   }
 
-  // 7. STOP LOADING, SHOW RESULTS
   clearInterval(loadingInterval);
   document.getElementById('loading').style.display = 'none';
-
-  if (isDemo) {
-    document.getElementById('demoBanner').style.display = 'block';
-  }
+  document.getElementById('generateBtn').disabled = false;
+  document.getElementById('demoBanner').style.display = isDemo ? 'block' : 'none';
 
   renderResults(data);
 }
 
-/*
-========================================================
-RENDER RESULTS FUNCTION
-Δέχεται το JSON από το n8n (ή το MOCK)
-και χτίζει δυναμικά το DOM.
-
-Χρησιμοποιεί template literals για κάθε platform card.
-Κάθε card έχει platform color, tabs (όπου χρειάζεται),
-και copy buttons.
-========================================================
-*/
 function renderResults(d) {
   const container = document.getElementById('results');
 
   container.innerHTML = `
 
-    <!-- FACEBOOK CARD — Tabs για A/B variations -->
-    <div class="platform-card">
+    <!-- FIX: id="fb-card" προστέθηκε εδώ για να δουλεύει η switchTab() -->
+    <div class="platform-card" id="fb-card">
       <div class="platform-header" onclick="toggleCard('fb-body')">
         <div class="platform-label">
           <div class="platform-dot dot-fb"></div>
@@ -820,7 +585,6 @@ function renderResults(d) {
       </div>
     </div>
 
-    <!-- INSTAGRAM CARD -->
     <div class="platform-card">
       <div class="platform-header" onclick="toggleCard('ig-body')">
         <div class="platform-label">
@@ -839,7 +603,6 @@ function renderResults(d) {
       </div>
     </div>
 
-    <!-- LINKEDIN CARD -->
     <div class="platform-card">
       <div class="platform-header" onclick="toggleCard('li-body')">
         <div class="platform-label">
@@ -857,7 +620,6 @@ function renderResults(d) {
       </div>
     </div>
 
-    <!-- TIKTOK CARD -->
     <div class="platform-card">
       <div class="platform-header" onclick="toggleCard('tt-body')">
         <div class="platform-label">
@@ -874,7 +636,6 @@ function renderResults(d) {
       </div>
     </div>
 
-    <!-- IMAGE CARD -->
     <div class="platform-card">
       <div class="platform-header" onclick="toggleCard('vis-body')">
         <div class="platform-label">
@@ -895,7 +656,6 @@ function renderResults(d) {
       </div>
     </div>
 
-    <!-- RESET BUTTON -->
     <button class="btn-generate" onclick="reset()" style="margin-top:8px;background:transparent;border:1px solid var(--border);color:var(--muted)">
       ← Νέο Generate
     </button>
@@ -904,14 +664,6 @@ function renderResults(d) {
   container.style.display = 'block';
 }
 
-/*
-========================================================
-HELPER: contentBlock()
-Δημιουργεί ένα label + text + copy button block.
-Κληρώνεται για κάθε section μέσα στα platform cards.
-Η unique ID βασίζεται στο timestamp για αποφυγή conflicts.
-========================================================
-*/
 function contentBlock(label, text) {
   if (!text) return '';
   const id = 'cb_' + Math.random().toString(36).substr(2,6);
@@ -924,13 +676,6 @@ function contentBlock(label, text) {
   `;
 }
 
-/*
-========================================================
-HELPER: copyText()
-Χρησιμοποιεί το Clipboard API για copy.
-Αλλάζει το button σε "Copied!" για visual feedback.
-========================================================
-*/
 function copyText(id, btn) {
   const text = document.getElementById(id).innerText;
   navigator.clipboard.writeText(text).then(() => {
@@ -940,50 +685,40 @@ function copyText(id, btn) {
       btn.textContent = 'Copy';
       btn.classList.remove('copied');
     }, 2000);
+  }).catch(err => {
+    console.error('Σφάλμα αντιγραφής:', err);
   });
 }
 
-/*
-========================================================
-HELPER: toggleCard()
-Collapsible cards — κάνει show/hide το platform body.
-Βελτιώνει usability όταν υπάρχουν πολλά αποτελέσματα.
-========================================================
-*/
 function toggleCard(id) {
   const el = document.getElementById(id);
-  el.style.display = el.style.display === 'none' ? 'block' : '';
+  el.style.display = (el.style.display === 'none') ? 'block' : 'none';
 }
 
 /*
-========================================================
-HELPER: switchTab()
-Για τα Facebook A/B tabs.
-Αλλάζει active class και εμφανίζει/κρύβει panes.
-========================================================
+FIX (Gemini): Η switchTab() τώρα βρίσκει την κάρτα
+μέσω id="${platform}-card" και αλλάζει μόνο τα tabs
+και panes ΜΕΣΑ σε αυτή. Η παλιά έκδοση χρησιμοποιούσε
+event.target που έδινε λάθος αποτέλεσμα.
 */
-function switchTab(platform, variant) {
-  document.querySelectorAll(`#${platform}-a, #${platform}-b`).forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => {
-    if (t.closest(`[id^="${platform}"]`) || t.parentElement.parentElement.id === `${platform}-body`) {
-      t.classList.remove('active');
-    }
-  });
-  document.getElementById(`${platform}-${variant}`).classList.add('active');
-  event.target.classList.add('active');
+function switchTab(platform, tabName) {
+  const card = document.getElementById(`${platform}-card`);
+  card.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  card.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  const tabs = card.querySelectorAll('.tab');
+  if (tabName === 'a') {
+    tabs[0].classList.add('active');
+    document.getElementById(`${platform}-a`).classList.add('active');
+  } else {
+    tabs[1].classList.add('active');
+    document.getElementById(`${platform}-b`).classList.add('active');
+  }
 }
 
-/*
-========================================================
-RESET FUNCTION
-Επιστρέφει στην αρχική κατάσταση.
-========================================================
-*/
 function reset() {
+  document.querySelector('.card').style.display = 'block';
   document.getElementById('results').style.display = 'none';
   document.getElementById('demoBanner').style.display = 'none';
-  document.querySelector('.card').style.display = 'block';
-  document.getElementById('generateBtn').disabled = false;
 }
 </script>
 </body>
