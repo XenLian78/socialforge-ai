@@ -534,6 +534,7 @@ async function generate() {
     clearTimeout(timeout);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     data = await response.json();
+    console.log("Τα δεδομένα που έλαβα:", data);
 
   } catch (err) {
     console.warn('n8n unreachable, using demo data:', err.message);
@@ -546,7 +547,11 @@ async function generate() {
   document.getElementById('generateBtn').disabled = false;
   document.getElementById('demoBanner').style.display = isDemo ? 'block' : 'none';
 
-  renderResults(data);
+    if (isDemo) {
+    renderResults(data);
+  } else {
+    renderResults(data[0].json);
+  }
 }
 
 function renderResults(d) {
@@ -695,12 +700,6 @@ function toggleCard(id) {
   el.style.display = (el.style.display === 'none') ? 'block' : 'none';
 }
 
-/*
-FIX (Gemini): Η switchTab() τώρα βρίσκει την κάρτα
-μέσω id="${platform}-card" και αλλάζει μόνο τα tabs
-και panes ΜΕΣΑ σε αυτή. Η παλιά έκδοση χρησιμοποιούσε
-event.target που έδινε λάθος αποτέλεσμα.
-*/
 function switchTab(platform, tabName) {
   const card = document.getElementById(`${platform}-card`);
   card.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
