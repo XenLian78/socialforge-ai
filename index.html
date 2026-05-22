@@ -533,8 +533,7 @@ async function generate() {
 
     clearTimeout(timeout);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const result = await response.json();
-    data = result.ai_response;
+    data = await response.json();
 
   } catch (err) {
     console.warn('n8n unreachable, using demo data:', err.message);
