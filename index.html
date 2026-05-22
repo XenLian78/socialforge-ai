@@ -495,7 +495,6 @@ async function generate() {
     return;
   }
 
-  // UI Setup
   document.querySelector('.card').style.display = 'none';
   document.getElementById('results').style.display = 'none';
   document.getElementById('loading').style.display = 'block';
@@ -515,10 +514,6 @@ async function generate() {
     "Αποστολή στο Email": email,
     "topic": topic,
     "productUrl": url
-    "productUrl": url,
-    "tone": tone,
-    "style": style,
-    "email": email
   };
 
   let data = null;
@@ -536,32 +531,9 @@ async function generate() {
     });
 
     clearTimeout(timeout);
-    
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     data = await response.json();
     console.log("Τα δεδομένα που έλαβα:", data);
-    
-    const rawData = await response.json();
-    console.log("Raw Response από n8n:", rawData);
-
-    // Εδώ "καθαρίζουμε" τα δεδομένα με ασφάλεια
-    let finalData;
-    if (Array.isArray(rawData) && rawData.length > 0) {
-        // Αν είναι n8n standard format [{json: {...}}]
-        finalData = rawData[0].json ? rawData[0].json : rawData[0];
-    } else {
-        finalData = rawData;
-    }
-
-    console.log("Data που στέλνω για Render:", finalData);
-    
-    // UI Cleanup
-    clearInterval(loadingInterval);
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('generateBtn').disabled = false;
-    
-    // Render
-    renderResults(finalData);
 
   } catch (err) {
     console.warn('n8n unreachable, using demo data:', err.message);
@@ -574,17 +546,11 @@ async function generate() {
   document.getElementById('generateBtn').disabled = false;
   document.getElementById('demoBanner').style.display = isDemo ? 'block' : 'none';
 
+  renderResults(data);
     if (isDemo) {
     renderResults(data);
   } else {
     renderResults(data[0].json);
-    console.error("Σφάλμα στο generate:", err);
-    clearInterval(loadingInterval);
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('generateBtn').disabled = false;
-    
-    alert("Σφάλμα σύνδεσης. Χρήση Demo Mode...");
-    renderResults(MOCK); // Fallback στο Mock
   }
 }
 
@@ -734,6 +700,12 @@ function toggleCard(id) {
   el.style.display = (el.style.display === 'none') ? 'block' : 'none';
 }
 
+/*
+FIX (Gemini): Η switchTab() τώρα βρίσκει την κάρτα
+μέσω id="${platform}-card" και αλλάζει μόνο τα tabs
+και panes ΜΕΣΑ σε αυτή. Η παλιά έκδοση χρησιμοποιούσε
+event.target που έδινε λάθος αποτέλεσμα.
+*/
 function switchTab(platform, tabName) {
   const card = document.getElementById(`${platform}-card`);
   card.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
