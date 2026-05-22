@@ -485,7 +485,7 @@ const MOCK = {
 let loadingInterval = null;
 
 async function generate() {
-    // ... εδώ μένουν τα υπάρχοντα πεδία (topic, tone, etc) ...
+    // ... (τα υπόλοιπα υπάρχοντα στοιχεία της συνάρτησης) ...
 
     try {
         const response = await fetch(WEBHOOK_URL, {
@@ -498,27 +498,27 @@ async function generate() {
         
         const rawData = await response.json();
         
-        // --- Εδώ είναι το "μαγικό" fix ---
-        console.log("Απάντηση από n8n:", rawData); // Για να δούμε ακριβώς τι έρχεται
-        
-        let dataToRender;
-        // Αν το n8n επιστρέφει Array (που είναι το σύνηθες), πάρε το πρώτο στοιχείο
+        // --- ΕΔΩ ΓΙΝΕΤΑΙ ΤΟ ΞΕΠΑΚΕΤΑΡΙΣΜΑ ---
+        let finalData;
         if (Array.isArray(rawData)) {
-            dataToRender = rawData[0].json ? rawData[0].json : rawData[0];
+            // Αν είναι λίστα, παίρνουμε το πρώτο αντικείμενο
+            // Ελέγχουμε αν υπάρχει το key 'json' (n8n standard)
+            finalData = rawData[0].json ? rawData[0].json : rawData[0];
         } else {
-            // Αν είναι κατευθείαν object
-            dataToRender = rawData;
+            finalData = rawData;
         }
 
-        // Τέλος, αντικατάστησε το UI και εμφάνισε τα αποτελέσματα
+        console.log("Δεδομένα που θα εμφανιστούν:", finalData);
+        
+        // UI Cleanup
         document.getElementById('loading').style.display = 'none';
-        renderResults(dataToRender);
+        
+        // Render
+        renderResults(finalData);
 
     } catch (error) {
-        console.error("Σφάλμα στην απόκριση:", error);
-        alert("Κάτι πήγε στραβά, αλλά το mail στάλθηκε!");
-        // Αν θες να πέφτεις στο demo σε περίπτωση λάθους:
-        // renderResults(MOCK); 
+        console.error("Σφάλμα:", error);
+        alert("Κάτι πήγε στραβά στην ανάγνωση των δεδομένων.");
     }
 }
 
