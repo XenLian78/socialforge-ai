@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="el">
 <head>
@@ -485,41 +484,70 @@ const MOCK = {
 let loadingInterval = null;
 
 async function generate() {
-    // ... (τα υπόλοιπα υπάρχοντα στοιχεία της συνάρτησης) ...
+  const topic  = document.getElementById('topic').value.trim();
+  const url    = document.getElementById('productUrl').value.trim();
+  const tone   = document.getElementById('tone').value;
+  const style  = document.getElementById('style').value;
+  const email  = document.getElementById('email').value.trim();
 
-    try {
-        const response = await fetch(WEBHOOK_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
+  if (!topic || !tone || !style || !email) {
+    alert('Παρακαλώ συμπλήρωσε όλα τα υποχρεωτικά πεδία.');
+    return;
+  }
 
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        
-        const rawData = await response.json();
-        
-        // --- ΕΔΩ ΓΙΝΕΤΑΙ ΤΟ ΞΕΠΑΚΕΤΑΡΙΣΜΑ ---
-        let finalData;
-        if (Array.isArray(rawData)) {
-            // Αν είναι λίστα, παίρνουμε το πρώτο αντικείμενο
-            // Ελέγχουμε αν υπάρχει το key 'json' (n8n standard)
-            finalData = rawData[0].json ? rawData[0].json : rawData[0];
-        } else {
-            finalData = rawData;
-        }
+  document.querySelector('.card').style.display = 'none';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('loading').style.display = 'block';
+  document.getElementById('generateBtn').disabled = true;
 
-        console.log("Δεδομένα που θα εμφανιστούν:", finalData);
-        
-        // UI Cleanup
-        document.getElementById('loading').style.display = 'none';
-        
-        // Render
-        renderResults(finalData);
+  let msgIndex = 0;
+  document.getElementById('loadingText').textContent = LOADING_MSGS[msgIndex];
+  loadingInterval = setInterval(() => {
+    msgIndex = (msgIndex + 1) % LOADING_MSGS.length;
+    document.getElementById('loadingText').textContent = LOADING_MSGS[msgIndex];
+  }, 2500);
 
-    } catch (error) {
-        console.error("Σφάλμα:", error);
-        alert("Κάτι πήγε στραβά στην ανάγνωση των δεδομένων.");
-    }
+  const payload = {
+    "Τίτλος Προϊόντος ή Θέμα / Product title or Theme": topic,
+    "Tone of Voice (Mood) / Τόνος ": tone,
+    "Στυλ / Visual Style": style,
+    "Αποστολή στο Email": email,
+    "topic": topic,
+    "productUrl": url
+  };
+
+  let data = null;
+  let isDemo = false;
+
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 120000);
+
+    const response = await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      signal: controller.signal
+    });
+
+    clearTimeout(timeout);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const result = await response.json();
+    data = result.ai_response;
+    data = await response.json();
+
+  } catch (err) {
+    console.warn('n8n unreachable, using demo data:', err.message);
+    data = MOCK;
+    isDemo = true;
+  }
+
+  clearInterval(loadingInterval);
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('generateBtn').disabled = false;
+  document.getElementById('demoBanner').style.display = isDemo ? 'block' : 'none';
+
+  renderResults(data);
 }
 
 function renderResults(d) {
@@ -668,6 +696,12 @@ function toggleCard(id) {
   el.style.display = (el.style.display === 'none') ? 'block' : 'none';
 }
 
+/*
+FIX (Gemini): Η switchTab() τώρα βρίσκει την κάρτα
+μέσω id="${platform}-card" και αλλάζει μόνο τα tabs
+και panes ΜΕΣΑ σε αυτή. Η παλιά έκδοση χρησιμοποιούσε
+event.target που έδινε λάθος αποτέλεσμα.
+*/
 function switchTab(platform, tabName) {
   const card = document.getElementById(`${platform}-card`);
   card.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
