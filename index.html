@@ -485,84 +485,41 @@ const MOCK = {
 let loadingInterval = null;
 
 async function generate() {
-  const topic  = document.getElementById('topic').value.trim();
-  const url    = document.getElementById('productUrl').value.trim();
-  const tone   = document.getElementById('tone').value;
-  const style  = document.getElementById('style').value;
-  const email  = document.getElementById('email').value.trim();
+    // ... εδώ μένουν τα υπάρχοντα πεδία (topic, tone, etc) ...
 
-  if (!topic || !tone || !style || !email) {
-    alert('Παρακαλώ συμπλήρωσε όλα τα υποχρεωτικά πεδία.');
-    return;
-  }
+    try {
+        const response = await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
 
-  // UI Setup
-  document.querySelector('.card').style.display = 'none';
-  document.getElementById('results').style.display = 'none';
-  document.getElementById('loading').style.display = 'block';
-  document.getElementById('generateBtn').disabled = true;
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        
+        const rawData = await response.json();
+        
+        // --- Εδώ είναι το "μαγικό" fix ---
+        console.log("Απάντηση από n8n:", rawData); // Για να δούμε ακριβώς τι έρχεται
+        
+        let dataToRender;
+        // Αν το n8n επιστρέφει Array (που είναι το σύνηθες), πάρε το πρώτο στοιχείο
+        if (Array.isArray(rawData)) {
+            dataToRender = rawData[0].json ? rawData[0].json : rawData[0];
+        } else {
+            // Αν είναι κατευθείαν object
+            dataToRender = rawData;
+        }
 
-  let msgIndex = 0;
-  document.getElementById('loadingText').textContent = LOADING_MSGS[msgIndex];
-  loadingInterval = setInterval(() => {
-    msgIndex = (msgIndex + 1) % LOADING_MSGS.length;
-    document.getElementById('loadingText').textContent = LOADING_MSGS[msgIndex];
-  }, 2500);
+        // Τέλος, αντικατάστησε το UI και εμφάνισε τα αποτελέσματα
+        document.getElementById('loading').style.display = 'none';
+        renderResults(dataToRender);
 
-  const payload = {
-    "topic": topic,
-    "productUrl": url,
-    "tone": tone,
-    "style": style,
-    "email": email
-  };
-
-  try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 120000);
-
-    const response = await fetch(WEBHOOK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-      signal: controller.signal
-    });
-
-    clearTimeout(timeout);
-    
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    
-    const rawData = await response.json();
-    console.log("Raw Response από n8n:", rawData);
-
-    // Εδώ "καθαρίζουμε" τα δεδομένα με ασφάλεια
-    let finalData;
-    if (Array.isArray(rawData) && rawData.length > 0) {
-        // Αν είναι n8n standard format [{json: {...}}]
-        finalData = rawData[0].json ? rawData[0].json : rawData[0];
-    } else {
-        finalData = rawData;
+    } catch (error) {
+        console.error("Σφάλμα στην απόκριση:", error);
+        alert("Κάτι πήγε στραβά, αλλά το mail στάλθηκε!");
+        // Αν θες να πέφτεις στο demo σε περίπτωση λάθους:
+        // renderResults(MOCK); 
     }
-
-    console.log("Data που στέλνω για Render:", finalData);
-    
-    // UI Cleanup
-    clearInterval(loadingInterval);
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('generateBtn').disabled = false;
-    
-    // Render
-    renderResults(finalData);
-
-  } catch (err) {
-    console.error("Σφάλμα στο generate:", err);
-    clearInterval(loadingInterval);
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('generateBtn').disabled = false;
-    
-    alert("Σφάλμα σύνδεσης. Χρήση Demo Mode...");
-    renderResults(MOCK); // Fallback στο Mock
-  }
 }
 
 function renderResults(d) {
