@@ -431,10 +431,10 @@
 /*
 ========================================================
 CONFIGURATION
-Για live testing με ngrok αλλάζεις μόνο αυτή τη γραμμή:
+For live testing with ngrok, change only this line:
 const WEBHOOK_URL = 'https://xxxx.ngrok-free.app/webhook/socialforge';
-Για τοπικό testing (index.html με διπλό κλικ) αφήνεις:
-cconst WEBHOOK_URL = 'http://localhost:5678/webhook-test/socialforge';
+For local testing (double-click index.html) keep:
+const WEBHOOK_URL = 'http://localhost:5678/webhook-test/socialforge';
 ========================================================
 */
 const WEBHOOK_URL = 'http://localhost:5678/webhook-test/socialforge';
@@ -559,7 +559,7 @@ function renderResults(d) {
 
   container.innerHTML = `
 
-    <!-- FIX: id="fb-card" προστέθηκε εδώ για να δουλεύει η switchTab() -->
+    <!-- FIX: id="fb-card" added here so switchTab() works correctly -->
     <div class="platform-card" id="fb-card">
       <div class="platform-header" onclick="toggleCard('fb-body')">
         <div class="platform-label">
@@ -574,14 +574,14 @@ function renderResults(d) {
           <div class="tab" onclick="switchTab('fb','b')">Variation B — Benefit</div>
         </div>
         <div class="tab-pane active" id="fb-a">
-          ${contentBlock('Τίτλος', d.facebook_a_title)}
+          ${contentBlock('Title', d.facebook_a_title)}
           ${contentBlock('Hook', d.facebook_a_hook)}
           ${contentBlock('Body', d.facebook_a_body)}
           ${contentBlock('CTA', d.facebook_a_cta)}
           ${contentBlock('Hashtags', d.facebook_a_hashtags)}
         </div>
         <div class="tab-pane" id="fb-b">
-          ${contentBlock('Τίτλος', d.facebook_b_title)}
+          ${contentBlock('Title', d.facebook_b_title)}
           ${contentBlock('Hook', d.facebook_b_hook)}
           ${contentBlock('Body', d.facebook_b_body)}
           ${contentBlock('CTA', d.facebook_b_cta)}
@@ -655,14 +655,14 @@ function renderResults(d) {
         ${contentBlock('CTA', d.svgCta || '—')}
         ${d.imageUrl ? `
         <div class="image-actions">
-          <a href="${d.imageUrl}" target="_blank" class="btn-sm btn-outline">🔗 Άνοιγμα εικόνας</a>
+          <a href="${d.imageUrl}" target="_blank" class="btn-sm btn-outline">🔗 Open Image</a>
           <a href="${d.imageUrl}" download="socialforge-image.jpg" class="btn-sm btn-solid">⬇ Download</a>
         </div>` : ''}
       </div>
     </div>
 
     <button class="btn-generate" onclick="reset()" style="margin-top:8px;background:transparent;border:1px solid var(--border);color:var(--muted)">
-      ← Νέο Generate
+      ← New Generate
     </button>
   `;
 
@@ -691,7 +691,7 @@ function copyText(id, btn) {
       btn.classList.remove('copied');
     }, 2000);
   }).catch(err => {
-    console.error('Σφάλμα αντιγραφής:', err);
+    console.error('Copy error:', err);
   });
 }
 
@@ -701,10 +701,9 @@ function toggleCard(id) {
 }
 
 /*
-FIX (Gemini): Η switchTab() τώρα βρίσκει την κάρτα
-μέσω id="${platform}-card" και αλλάζει μόνο τα tabs
-και panes ΜΕΣΑ σε αυτή. Η παλιά έκδοση χρησιμοποιούσε
-event.target που έδινε λάθος αποτέλεσμα.
+FIX: switchTab() now finds the card via id="${platform}-card"
+and only toggles tabs and panes inside it.
+Previous version used event.target which gave wrong results.
 */
 function switchTab(platform, tabName) {
   const card = document.getElementById(`${platform}-card`);
