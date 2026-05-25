@@ -106,7 +106,7 @@ Respond to Webhook      (JSON response → UI)
 
 ## Author
 
-**Xenofon Lianos** 
+**Xenofon Lianos** — Marketing Professional & AI-Assisted Builder
 
 Built as part of my automation portfolio, combining marketing thinking with technical execution.
 
