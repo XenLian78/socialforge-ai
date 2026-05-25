@@ -358,11 +358,11 @@
   <header>
     <div class="badge">AI-POWERED · n8n AUTOMATION</div>
     <h1>Social<span>Forge</span> AI</h1>
-    <p>Δώσε ένα θέμα. Πάρε έτοιμο content για κάθε πλατφόρμα.</p>
+    <p>Give a topic. Get ready-made content for every platform.</p>
   </header>
 
   <div class="demo-banner" id="demoBanner">
-    ⚡ Demo Mode — Προβολή mock δεδομένων. Για live χρήση απαιτείται το n8n να τρέχει locally.
+    ⚡ Demo Mode — Showing mock data. Live use requires n8n running locally.
   </div>
 
   <div class="card">
@@ -371,19 +371,19 @@
     <div class="form-grid">
 
       <div class="field full">
-        <label for="topic">Θέμα / Προϊόν <span class="req">*</span></label>
+        <label for="topic">Topic / Product <span class="req">*</span></label>
         <input type="text" id="topic" placeholder="π.χ. Optilis Ireks — βελτιωτικό αρτοποιίας Laoudis" />
       </div>
 
       <div class="field full">
-        <label for="productUrl">URL Προϊόντος <span style="color:var(--muted)">(προαιρετικό)</span></label>
+        <label for="productUrl">Product URL (optional) <span style="color:var(--muted)">(προαιρετικό)</span></label>
         <input type="url" id="productUrl" placeholder="https://www.laoudis.gr/products/optilis-ireks" />
       </div>
 
       <div class="field">
         <label for="tone">Tone of Voice <span class="req">*</span></label>
         <select id="tone">
-          <option value="">— Επίλεξε —</option>
+          <option value="">— Select —</option>
           <option value="Professional">Professional</option>
           <option value="Friendly & Warm">Friendly & Warm</option>
           <option value="Bold & Energetic">Bold & Energetic</option>
@@ -394,7 +394,7 @@
       <div class="field">
         <label for="style">Visual Style <span class="req">*</span></label>
         <select id="style">
-          <option value="">— Επίλεξε —</option>
+          <option value="">— Select —</option>
           <option value="Photorealistic">Photorealistic</option>
           <option value="Minimalist">Minimalist</option>
           <option value="Bold & Colorful">Bold & Colorful</option>
@@ -403,7 +403,7 @@
       </div>
 
       <div class="field full">
-        <label for="email">Αποστολή στο Email <span class="req">*</span></label>
+        <label for="email">Send to Email <span class="req">*</span></label>
         <input type="email" id="email" placeholder="yourname@email.com" />
       </div>
 
@@ -440,14 +440,14 @@ cconst WEBHOOK_URL = 'http://localhost:5678/webhook-test/socialforge';
 const WEBHOOK_URL = 'http://localhost:5678/webhook-test/socialforge';
 
 const LOADING_MSGS = [
-  'Αναλύω το προϊόν...',
-  'Κάνω research στο internet...',
-  'Γράφω copy για Facebook...',
-  'Βελτιστοποιώ για Instagram...',
-  'Δημιουργώ TikTok hook...',
-  'Χτίζω το LinkedIn post...',
-  'Παράγω εικόνα...',
-  'Τελικές πινελιές...'
+  'Analyzing the product...',
+  'Researching on the internet...',
+  'Writing copy for Facebook...',
+  'Optimizing for Instagram...',
+  'Creating TikTok hook...',
+  'Building the LinkedIn post...',
+  'Generating image...',
+  'Final touches...'
 ];
 
 const MOCK = {
@@ -491,7 +491,7 @@ async function generate() {
   const email  = document.getElementById('email').value.trim();
 
   if (!topic || !tone || !style || !email) {
-    alert('Παρακαλώ συμπλήρωσε όλα τα υποχρεωτικά πεδία.');
+    alert('Please fill in all required fields.');
     return;
   }
 
@@ -533,7 +533,7 @@ async function generate() {
     clearTimeout(timeout);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     data = await response.json();
-    console.log("Τα δεδομένα που έλαβα:", data);
+    console.log("Data received:", data);
 
   } catch (err) {
     console.warn('n8n unreachable, using demo data:', err.message);
