@@ -1,6 +1,6 @@
 # SocialForge AI 🚀
 
-> AI-powered social media content generator — δώσε ένα θέμα, πάρε έτοιμο content για Facebook, Instagram, LinkedIn & TikTok.
+> AI-powered social media content generator — give a topic, get ready-made content for Facebook, Instagram, LinkedIn & TikTok.
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-4f8ef7?style=flat-square)](https://xenlian78.github.io/socialforge-ai)
 [![n8n](https://img.shields.io/badge/Built%20with-n8n-EA4B71?style=flat-square)](https://n8n.io)
@@ -8,21 +8,21 @@
 
 ---
 
-## Τι κάνει
+# What it does
 
-Ο χρήστης δίνει ένα προϊόν ή θέμα (προαιρετικά και URL σελίδας) και το σύστημα παράγει αυτόματα:
+The user provides a product or topic (optionally with a page URL) and the system automatically generates:
 
-- **Facebook** — 2 παραλλαγές A/B (Hook vs Benefit)
-- **Instagram** — Caption με save trigger και SEO keywords
-- **LinkedIn** — Thought leadership post με first comment strategy
-- **TikTok** — Script outline με retention hook και text overlays
-- **Visual** — AI-generated εικόνα μέσω Pollinations.ai
+- **Facebook** — 2 A/B variations (Hook vs Benefit)
+- **Instagram** — Caption with save trigger and SEO keywords
+- **LinkedIn** — Thought leadership post with first comment strategy
+- **TikTok** — Script outline with retention hook and text overlays
+- **Visual** — AI-generated image via Pollinations.ai
 
-Τα αποτελέσματα εμφανίζονται στο UI **και** αποστέλλονται αυτόματα σε email της επιλογής σου.
+Results are displayed in the UI **and** automatically sent to an email of your choice.
 
 ---
 
-## Αρχιτεκτονική
+## Architecture
 
 ```
 UI (HTML/CSS/JS)
@@ -54,12 +54,12 @@ Respond to Webhook      (JSON response → UI)
 
 ## Tech Stack
 
-| Layer | Tool | Γιατί |
+| Layer | Tool | Why |
 |---|---|---|
 | Automation | n8n (self-hosted) | Visual workflow builder, open-source |
-| LLM | Groq + Llama 4 Scout | Δωρεάν, γρήγορο, αξιόπιστο tool calling |
-| Web Search | SerpApi | Real-time Google results για research |
-| Image Gen | Pollinations.ai | Δωρεάν AI image generation API |
+| LLM | Groq + Llama 4 Scout | Free, fast, reliable tool calling |
+| Web Search | SerpApi | Real-time Google results for research |
+| Image Gen | Pollinations.ai | Free AI image generation API |
 | Frontend | Vanilla HTML/CSS/JS | Zero dependencies, GitHub Pages ready |
 | Email | Gmail API (OAuth2) | Native n8n integration |
 
@@ -68,47 +68,47 @@ Respond to Webhook      (JSON response → UI)
 ## Features
 
 - ✅ Multi-platform content (Facebook, Instagram, LinkedIn, TikTok)
-- ✅ A/B testing copywriting για Facebook
-- ✅ Real-time web research για κάθε προϊόν
-- ✅ Product URL scraping για ακριβές περιεχόμενο
-- ✅ Email delivery σε οποιοδήποτε inbox
-- ✅ Copy buttons για κάθε section
-- ✅ Demo mode για portfolio viewers
+- ✅ A/B testing copywriting for Facebook
+- ✅ Real-time web research for each product
+- ✅ Product URL scraping for accurate content
+- ✅ Email delivery to any inbox
+- ✅ Copy buttons for each section
+- ✅ Demo mode for portfolio viewers
 - ✅ Collapsible platform cards
 
 ---
 
-## Πώς λειτουργεί locally
+## How to run locally
 
-**Προαπαιτούμενα:**
-- n8n εγκατεστημένο και τρέχει στο `localhost:5678`
-- Groq API key (δωρεάν στο [console.groq.com](https://console.groq.com))
-- SerpApi key (δωρεάν tier)
+**Prerequisites:**
+- n8n installed and running at `localhost:5678`
+- Groq API key (free at [console.groq.com](https://console.groq.com))
+- SerpApi key (free tier)
 - Gmail OAuth2 credentials
 
-**Βήματα:**
-1. Import το n8n workflow
-2. Ρύθμισε τα credentials (Groq, SerpApi, Gmail)
-3. Activate το workflow
-4. Άνοιξε το `index.html` ή το GitHub Pages URL
+**Steps:**
+1. Import the n8n workflow
+2. Configure the credentials (Groq, SerpApi, Gmail)
+3. Activate the workflow
+4. Open `index.html` or the GitHub Pages URL
 
 ---
 
 ## Roadmap
 
-- [ ] Καλύτερη εικόνα με Fal.ai (όταν μπει budget)
-- [ ] Αφαίρεση SVG section
-- [ ] Βελτίωση content quality — full marketing structure
-- [ ] Carousel post generator για Instagram
+- [ ] Better image generation with Fal.ai (when budget allows)
+- [ ] Remove SVG section
+- [ ] Improve content quality — full marketing structure
+- [ ] Carousel post generator for Instagram
 - [ ] Scheduling integration (Buffer / Later API)
 
 ---
 
 ## Author
 
-**Xenofon Lianos** — Strategic Marketing Specialist → Automation Architect
+**Xenofon Lianos** 
 
-Χτίστηκε ως μέρος του automation portfolio μου που συνδυάζει marketing thinking με technical execution.
+Built as part of my automation portfolio, combining marketing thinking with technical execution.
 
 [![GitHub](https://img.shields.io/badge/GitHub-XenLian78-181717?style=flat-square&logo=github)](https://github.com/XenLian78)
 [![Portfolio](https://img.shields.io/badge/Portfolio-xenlian78.github.io-4f8ef7?style=flat-square)](https://xenlian78.github.io)
